@@ -6,7 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.extern.log4j.Log4j2;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -38,6 +42,7 @@ public class WeatherService {
         URI uri = buildURI(cityName);
         ResponseEntity<WeatherFull> entity = askWeatherAPI(uri);
         WeatherFull weather = entity.getBody();
+
         return getWeatherFromRequest(weather);
     }
 
@@ -68,11 +73,15 @@ public class WeatherService {
                 .setPath("current")
                 .setParameters(nameValuePairs)
                 .build();
+        log.info(uri.toString());
         return uri;
     }
 
     protected ResponseEntity<WeatherFull> askWeatherAPI(URI uri) {
         ResponseEntity<WeatherFull> entity = new RestTemplate().exchange(uri, HttpMethod.GET, null, WeatherFull.class);
+        log.info(entity.hasBody());
+        log.info(entity.getStatusCode());
+        log.info(entity.getBody().toString());
         return entity.hasBody() ? entity : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }

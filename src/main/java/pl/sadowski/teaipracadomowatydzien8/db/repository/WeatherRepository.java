@@ -15,7 +15,7 @@ import java.util.Set;
 @Repository
 public interface WeatherRepository extends JpaRepository<WeatherInfo, Long> {
 
-    @Query("SELECT c.country, c.name as cityName, w.temperature FROM WeatherInfo w JOIN City c ON  w.id = c.weatherInfo.id ")
+    @Query("SELECT c.country, c.name as cityName, w.temperature FROM WeatherInfo w JOIN FETCH City c ON  w.id = c.weatherInfo.id ")
     Set<Map<String, Object>> findAllWeathers();
 
 }

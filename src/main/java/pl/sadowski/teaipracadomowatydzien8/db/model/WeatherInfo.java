@@ -3,6 +3,7 @@ package pl.sadowski.teaipracadomowatydzien8.db.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -19,8 +20,7 @@ public class WeatherInfo {
     @GeneratedValue()
     private long id;
 
-    @OneToOne(mappedBy = "weatherInfo")
-    private City city;
+    @NonNull private Date timestamp;
     @NonNull private Integer temperature;
     @NonNull private String weatherIcon;
     @NonNull private Integer windSpeed;
@@ -30,7 +30,9 @@ public class WeatherInfo {
     @NonNull private Integer cloudCover;
 
 
-
+public WeatherInfo weatherInfoNotAvailable(){
+    return new WeatherInfo();
+}
 }
 
 
