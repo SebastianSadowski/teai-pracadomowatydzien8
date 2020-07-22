@@ -1,9 +1,9 @@
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
+**/main/resources/**
 !**/src/main/**/target/
 !**/src/test/**/target/
-**/main/resources/**
 ### STS ###
 .apt_generated
 .classpath
